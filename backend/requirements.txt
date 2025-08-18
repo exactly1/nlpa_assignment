@@ -1,0 +1,14 @@
+# requirements.txt
+streamlit>=1.34
+transformers>=4.41
+torch>=2.2; platform_system != "Darwin" or platform_machine != "arm64"
+sentencepiece>=0.1.99
+sacremoses>=0.0.53
+indic-transliteration>=2.3.63
+sacrebleu>=2.4.2
+numpy>=1.26
+pandas>=2.2
+pytest>=8.2
+nltk>=3.9
+googletrans==4.0.0rc1
+datasets>=2.20

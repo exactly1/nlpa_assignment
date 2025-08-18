@@ -1,0 +1,3 @@
+source_lang,target_lang,src_text,ref_text,our_translation,google_translation,bleu,ter,meteor,google_bleu,google_ter,google_meteor
+English,Hindi,What are you doing?,,व्हत् अरे योउ दोइन्ग्?,आप क्या कर रहे हो?,,,,,,
+English,Hindi,What are you doing?,आप क्या कर रहे हैं?,व्हत् अरे योउ दोइन्ग्?,आप क्या कर रहे हो?,8.745825313180626,100.0,,53.7284965911771,20.0,

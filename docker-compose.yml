@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  nmt-app:
+    build: .
+    image: exactly1/nmt-app:latest
+    ports:
+      - "8501:8501"
+    environment:
+      HF_HOME: /root/.cache/huggingface
+      STREAMLIT_BROWSER_GATHER_USAGE_STATS: "false"
+    volumes:
+      - ./.cache/huggingface:/root/.cache/huggingface
+      - ./data:/app/data
+      - ./out:/app/out
