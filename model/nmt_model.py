@@ -129,6 +129,37 @@ _ROMANIZED_HINTS = {
 }
 
 
+# Map ASCII uppercase letters to common Hindi letter-name forms for acronyms (e.g., NLP -> एनएलपी)
+_HI_ACRONYM_MAP = {
+    "A": "ए", "B": "बी", "C": "सी", "D": "डी", "E": "ई", "F": "एफ", "G": "जी", "H": "एच",
+    "I": "आई", "J": "जे", "K": "के", "L": "एल", "M": "एम", "N": "एन", "O": "ओ", "P": "पी",
+    "Q": "क्यू", "R": "आर", "S": "एस", "T": "टी", "U": "यू", "V": "वी", "W": "डब्ल्यू", "X": "एक्स",
+    "Y": "वाई", "Z": "जेड",
+}
+
+
+def _hindi_transliterate_acronyms(text: str) -> str:
+    """Transliterate all-caps ASCII acronyms in a Hindi sentence into Devanagari letter-names.
+
+    Example: "मैं NLP से प्यार करता हूँ" -> "मैं एनएलपी से प्यार करता हूँ"
+    """
+    # Replace standalone all-caps tokens 2-6 letters (not embedded in larger words)
+    pattern = re.compile(r"(?<![A-Za-z])([A-Z]{2,6})(?![A-Za-z])")
+    return pattern.sub(lambda m: "".join(_HI_ACRONYM_MAP.get(ch, ch) for ch in m.group(1)), text)
+
+
+def _adjust_progressive_loving(src_en: str, tgt_hi: str) -> str:
+    """If source is English progressive (e.g., 'am loving') and Hindi has 'प्यार करता हूँ',
+    prefer 'प्यार कर रहा हूँ' for better aspect alignment. Conservative, targeted change.
+    """
+    s = src_en.lower()
+    if (" i am " in f" {s} " or s.startswith("i am ") or s.endswith(" i am")) and (" loving " in f" {s} " or s.strip().startswith("i am loving")):
+        # Prefer 'कर रहा हूं' (without chandra-bindu) as per requested form
+        normalized = tgt_hi.replace("प्यार करता हूँ", "प्यार कर रहा हूं").replace("प्यार करता हूं", "प्यार कर रहा हूं")
+        return normalized
+    return tgt_hi
+
+
 def evaluate_translation(hypothesis: str, reference: Optional[str]) -> Dict[str, Optional[float]]:
     """Compute BLEU, TER, METEOR given a reference string (if provided)."""
     if not reference or not reference.strip():
@@ -183,6 +214,12 @@ def translate_text(text: str, source_lang: str, target_lang: str, use_transliter
         else:
             translated, used = _pivot_translate(text, src, "en", tgt)
             models_used = used
+
+    # Post-processing for Hindi output: acronym transliteration and targeted aspect fix
+    if target_lang == "Hindi":
+        translated = _hindi_transliterate_acronyms(translated)
+        if source_lang == "English":
+            translated = _adjust_progressive_loving(text, translated)
 
     metrics = evaluate_translation(translated, reference)
     return {"translation": translated, "model_name": " + ".join(models_used), "metrics": metrics}

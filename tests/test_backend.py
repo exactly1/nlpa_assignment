@@ -28,3 +28,16 @@ def test_unsupported_language():
 def test_namastey_transliteration_outputs_namaste_devnagari():
     res = translate_text("Namastey", "English", "Hindi", use_transliteration=True)
     assert res["translation"].strip() == "नमस्ते"
+
+
+def test_namaste_autodetect_transliteration_without_checkbox():
+    res = translate_text("Namaste", "English", "Hindi", use_transliteration=False)
+    assert res["translation"].strip() == "नमस्ते"
+    assert "transliteration" in (res.get("model_name") or "")
+
+
+def test_metrics_keys_when_reference_provided():
+    # We don't assert specific scores, only that metrics are present as floats or None
+    res = translate_text("Hello", "English", "Hindi", reference="नमस्ते")
+    m = res.get("metrics") or {}
+    assert set(["bleu", "ter", "meteor"]).issubset(set(m.keys()))
