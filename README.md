@@ -132,3 +132,7 @@ docker tag nmt-app:latest exactly1/nmt-app:latest
 docker login -u exactly1
 docker push exactly1/nmt-app:latest
 ```
+
+## Testing and Screenshots
+
+For a detailed test plan (including edge cases) and a screenshot capture checklist covering the entire flow, see `docs/Testing_and_Screenshots.md`. Place captured images under `docs/screenshots/`.
