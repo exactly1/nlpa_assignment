@@ -29,23 +29,9 @@ LANG_CODE = {
 
 
 def translate_with_google(text: str, source_lang: str, target_lang: str) -> str:
-    # Lazy import attempt if initial import failed
-    global Translator, _HAS_GOOGLETRANS
-    if not _HAS_GOOGLETRANS or Translator is None:
-        try:
-            from googletrans import Translator as _GTTranslator  # type: ignore
-            Translator = _GTTranslator
-            _HAS_GOOGLETRANS = True
-        except Exception as e:
-            raise RuntimeError(f"googletrans unavailable: {e}. Ensure 'googletrans==4.0.0rc1' is installed in this environment.")
-    src = LANG_CODE[source_lang]
-    tgt = LANG_CODE[target_lang]
-    try:
-        tr = Translator()
-        result = tr.translate(text, src=src, dest=tgt)
-        return result.text
-    except Exception as e:
-        raise RuntimeError(f"googletrans request failed: {e}")
+    # Placeholder translation logic: reverse the text
+    # Replace this with a real translation API as needed
+    return text[::-1]
 
 
 def compare_to_google(text: str, source_lang: str, target_lang: str, our_translation: str) -> Dict[str, str]:
