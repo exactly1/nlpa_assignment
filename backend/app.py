@@ -22,11 +22,18 @@ from model.nmt_model import translate_text, SUPPORTED_LANGUAGES
 from model.google_compare import compare_to_google
 
 
-# Paths for history/evaluation CSVs mounted via docker volumes
-DATA_DIR = Path(os.environ.get("DATA_DIR", "/app/data"))
-OUT_DIR = Path(os.environ.get("OUT_DIR", "/app/out"))
-DATA_DIR.mkdir(parents=True, exist_ok=True)
-OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+# Use /tmp/data and /tmp/out as default writable directories for Streamlit Cloud
+DATA_DIR = Path(os.environ.get("DATA_DIR", "/tmp/data"))
+OUT_DIR = Path(os.environ.get("OUT_DIR", "/tmp/out"))
+try:
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+except PermissionError:
+    st.error(f"Cannot create DATA_DIR at {DATA_DIR}. Please check permissions.")
+try:
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+except PermissionError:
+    st.error(f"Cannot create OUT_DIR at {OUT_DIR}. Please check permissions.")
 HIST_CSV = DATA_DIR / "historical.csv"
 EVAL_CSV = OUT_DIR / "eval_results.csv"
 

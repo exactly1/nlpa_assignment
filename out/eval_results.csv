@@ -1,1 +1,10 @@
 source_lang,target_lang,src_text,ref_text,our_translation,google_translation,bleu,ter,meteor,google_bleu,google_ter,google_meteor
+English,Hindi,I am loving the NLP,मैं NLP से प्यार करता हूँ,इ अम् लोविन्ग् थे न्ल्प्,मैं एनएलपी से प्यार कर रहा हूं,0.0,100.0,,14.535768424205482,66.66666666666666,
+English,Hindi,I am loving the NLP,मैं NLP से प्यार करता हूँ,इ अम् लोविन्ग् थे न्ल्प्,मैं एनएलपी से प्यार कर रहा हूं,0.0,100.0,,14.535768424205482,66.66666666666666,
+English,Hindi,I am in love with NLP,मुझे एनएलपी से प्यार है,इ अम् इन् लोवे विथ् न्ल्प्,मुझे एनएलपी से प्यार है,0.0,120.0,,100.00000000000004,0.0,
+English,Hindi,Enter text to translate,,एन्तेर् तेक्ष्त् तो त्रन्स्लते,अनुवाद करने के लिए पाठ दर्ज करें,,,,,,
+English,Hindi,What is a car?,,व्हत् इस् अ चर्?,कार क्या है?,,,,,,
+English,Hindi,Namaste,,नमस्ते,नमस्टे,,,,,,
+English,Marathi,Namaste,,नमस्ते,नमस्ते,,,,,,
+English,Marathi,What are you doing,,व्हत् अरे योउ दोइन्ग्,आपण काय करीत आहात,,,,,,
+Hindi,English,आप कहाँ जा रहे है,Where are you going,Where are you going?,Where are you going,66.87403049764218,25.0,,100.00000000000004,0.0,
